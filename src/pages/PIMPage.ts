@@ -28,7 +28,7 @@ export class PIMPage {
         this.employeeFirstNameInput = this.page.locator("//input[@name='firstName']");
         this.employeeLastNameInput = this.page.locator("//input[@name='lastName']");
         this.employeeIdInput = this.page.locator("//label[text()='Employee Id']/..//following-sibling::div//input");
-        this.saveEmployeeButton = this.page.locator("//button[contains(@class,'button--secondary') and @type='submit']");
+        this.saveEmployeeButton = this.page.locator("(//button[contains(@class,'button--secondary') and @type='submit'])[1]");
         this.driverLicenseNumberInput = this.page.locator("//label[contains(text(),'License Number')]/..//following-sibling::div//input");
         this.licenseExpiryDateInput = this.page.locator("//label[contains(text(),'License Expiry Date')]/..//following-sibling::div//input");
         this.nationalityDropdown = this.page.locator("//label[text()='Nationality']/../..//div[@class='oxd-select-text-input']");
@@ -62,6 +62,7 @@ export class PIMPage {
 
     async clickSaveEmployee() {
         await this.saveEmployeeButton.click();
+        await this.page.waitForTimeout(5000);
     }
 
     async enterDriverLicenseNumber(licenseNumber: string) {
@@ -87,14 +88,9 @@ export class PIMPage {
     }
 
     async selectGender(gender: string) {
-        //this.genderRadioButtons = this.page.locator("//label[text()='Gender']/../following-sibling::div//input[@value='1']");
-
         const genderValue = gender.toLowerCase() === 'male' ? '1' : '2';
-
         console.log("Gender value",genderValue);
-
         await this.page.locator(`//label[text()='Gender']/../following-sibling::div//input[@value='${genderValue}']/..`).click();
-        //await this.genderRadioButtons.filter({ has: this.page.locator(`//label[text()='Gender']/../following-sibling::div//input[@value='${gender}']`) }).check();
     } 
     
     
@@ -131,7 +127,7 @@ export class PIMPage {
     async isEmployeeUpdated(licenseNumber: string): Promise<boolean> {
         // Implementation for checking if employee details are updated
         const updatedLicenseNumber = (await this.driverLicenseNumberInput.innerText()).trim();
-        await this.page.waitForTimeout(5000);
+        await this.page.waitForTimeout(15000);
         return updatedLicenseNumber === licenseNumber;
     }
 
