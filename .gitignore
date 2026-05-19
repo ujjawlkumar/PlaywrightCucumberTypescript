@@ -1,0 +1,36 @@
+# Node modules
+node_modules/
+
+# Playwright reports
+playwright-report/
+test-results/
+
+# Allure
+allure-report/
+allure-results/
+
+# Environment files
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Video files
+videos/
+
+# IDE files
+.vscode/
+.idea/
+
+# Build folders
+dist/
+build/
+
+# Coverage
+coverage/
