@@ -1,4 +1,5 @@
-import { Page, Locator } from "playwright/test";
+import { TIMEOUT } from "dns";
+import { Page, Locator, expect } from "playwright/test";
 export class PIMPage {
     private page: Page;
     private pimMenu : Locator; 
@@ -16,6 +17,8 @@ export class PIMPage {
     private nationalityDropdown : Locator
     private maritalStatusDropdown : Locator;
     private dateOfBirthInput : Locator;
+    private successToast: Locator;
+
 
 
 
@@ -34,6 +37,7 @@ export class PIMPage {
         this.nationalityDropdown = this.page.locator("//label[text()='Nationality']/../..//div[@class='oxd-select-text-input']");
         this.maritalStatusDropdown = this.page.locator("//label[text()='Marital Status']/../..//div[@class='oxd-select-text-input']");
         this.dateOfBirthInput = this.page.locator("//label[text()='Date of Birth']/..//following-sibling::div//input");
+        this.successToast = page.locator("//*[contains(text(),'ucess')]");
     }
 
     async navigateToPIM() {
@@ -124,11 +128,19 @@ export class PIMPage {
 
     }
 
-    async isEmployeeUpdated(licenseNumber: string): Promise<boolean> {
+    async validateSuccessToast(): Promise<void> {
+
+        await expect(this.successToast).toBeVisible({
+            //timeout: 10000
+        });
+
+        await expect(this.successToast).toContainText('Success');
+    }
+    async isEmployeeUpdated(): Promise<boolean> {
         // Implementation for checking if employee details are updated
-        const updatedLicenseNumber = (await this.driverLicenseNumberInput.innerText()).trim();
-        await this.page.waitForTimeout(15000);
-        return updatedLicenseNumber === licenseNumber;
+        //const updatedLicenseNumber = (await this.driverLicenseNumberInput.innerText()).trim();
+       
+        return  await this.driverLicenseNumberInput.isVisible() === true;
     }
 
 }

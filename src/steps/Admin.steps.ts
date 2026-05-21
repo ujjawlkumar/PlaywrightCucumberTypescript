@@ -2,6 +2,7 @@ import {Given, When, Then} from "@cucumber/cucumber";
 import {expect} from "@playwright/test";
 import {CustomWorld} from "../utils/world";
 import {AdminPage} from "../pages/AdminPage";
+import { config } from "../config/config";
 
 let adminPage: AdminPage;
 let usernameValue: string;
@@ -42,10 +43,10 @@ let usernameValue: string;
         // want to wait for the success message to appear after saving the user
         const successToast = this.page.locator('.oxd-toast');
         await expect(successToast).toContainText('Success', {
-            timeout: 10000
+            timeout: config.timeout
         });
         // After saving, we should be back on the user list page. We can search for the username we just created.
-        await this.page.waitForTimeout(5000); // Wait for the user list to refresh
+        await this.page.waitForTimeout(config.timeout); // Wait for the user list to refresh
         const isUserAdded = await adminPage.isUserAdded(usernameValue);
         expect(isUserAdded).toBe(true);
     });

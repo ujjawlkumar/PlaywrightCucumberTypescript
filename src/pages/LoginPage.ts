@@ -1,4 +1,6 @@
 import {Page, Locator} from "@playwright/test";
+import { config } from "../config/config";
+
 export class LoginPage {
 
     private readonly usernameText: Locator;
@@ -47,7 +49,7 @@ export class LoginPage {
     }
 
     async navigateToApplication(){
-        await this.page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        await this.page.goto(config.baseUrl);
     }
 
     async enterCredentials(){
@@ -60,7 +62,7 @@ export class LoginPage {
     }
 
     async isDashboardVisible(): Promise<boolean> {
-        await this.dashboardHeader.waitFor({ state: 'visible', timeout: 5000 });
+        await this.dashboardHeader.waitFor({ state: 'visible', timeout: config.timeout });
         const headerText = await this.dashboardHeader.textContent();
         return headerText?.includes('Dashboard') ?? false;
     }

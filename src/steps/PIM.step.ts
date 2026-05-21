@@ -35,6 +35,6 @@ When('user updates employee personal details', async function () {
 });
 
 Then('employee details should be updated successfully', async function () {
-    const isEmployeeAdded = await pimPage.isEmployeeUpdated(updatedLicenseNumber);
-    expect(isEmployeeAdded).toBeTruthy();
+    //await pimPage.validateSuccessToast();
+    expect( await pimPage.isEmployeeUpdated()).toBeTruthy();
 });

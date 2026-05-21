@@ -1,4 +1,6 @@
 import {Page, Locator} from "@playwright/test";
+import { config } from "../config/config";
+
 export class AdminPage {
     private readonly adminTab: Locator;
     private readonly userManagementTab: Locator;
@@ -80,7 +82,7 @@ export class AdminPage {
     }
     
     async isUserAdded(username: string): Promise<boolean> {
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForTimeout(config.timeout);
         const userNameXpath = "//div[@class='oxd-table-body']//div[@class='oxd-table-cell oxd-padding-cell'][2]//div";
         await this.page.waitForSelector(userNameXpath);
         const userNameList = this.page.locator(userNameXpath);
